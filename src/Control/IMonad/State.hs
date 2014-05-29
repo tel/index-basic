@@ -39,7 +39,7 @@ mapStar phi (P a b) = let (c, d) = phi a b in P c d
 -- version of this. Or rather, I'd have to conflate the index erasure,
 -- the pair, and the monad all together and that seems wrong.
 --
--- > newtype (a :* b) i = P (a i) (b i)
+-- > newtype (a :* b) i = P (a i, b i)
 -- > data P m a b where
 -- >   Pm :: m (a :* b) i -> P m a b
 --
