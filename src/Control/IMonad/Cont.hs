@@ -8,7 +8,9 @@ module Control.IMonad.Cont where
 import           Control.Category.Index
 import           Control.IMonad.Do
 import           Control.IMonad.Identity
+import           Control.IMonad.Restrict
 import           Control.IMonad.Trans
+import qualified Data.Functor.Identity   as I
 import           Prelude                 hiding (return, (>>), (>>=))
 
 newtype ContT r (m :: (* -> *) -> (* -> *)) a i =
@@ -25,6 +27,10 @@ instance IMonadTrans (ContT r) where
   liftI m = contT (`bindI` m)
 
 type Cont r a i = ContT r Identity a i
+
+type ContT' r r' m a = R (ContT I.Identity m) r r' a
+
+type Cont'  r r'   a = R (ContT I.Identity Identity) r r' a
 
 contT :: ((a :-> m r) -> m r i) -> ContT r m a i
 contT = ContT
